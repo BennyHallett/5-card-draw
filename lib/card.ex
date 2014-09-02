@@ -5,6 +5,12 @@ defmodule Poker.Card do
   def name(card), do: "#{value_name(card)} of #{suit_name(card)}"
   def short_name(card), do: "#{card.value}#{short_suit card}"
 
+  def compare(%Poker.Card{ value: a, suit: _ }, %Poker.Card{ value: b, suit: _ }), do: _compare(val(a), val(b))
+
+  defp _compare(a, b) when a < b, do: -1
+  defp _compare(a, b) when a == b, do: 0
+  defp _compare(a, b) when a > b, do: 1
+
   defp short_suit(card) do
     card.suit
     |> Atom.to_string
@@ -28,4 +34,9 @@ defmodule Poker.Card do
 
   defp suit_name(card), do: card.suit |> Atom.to_string |> String.capitalize
 
+  defp val("A"),   do: 14
+  defp val("K"),   do: 13
+  defp val("Q"),   do: 12
+  defp val("J"),   do: 11
+  defp val(value), do: value
 end
