@@ -10,17 +10,19 @@ defmodule Poker.Hand do
     |> _value
   end
 
+  # Straight flush: All cards same suit in sequence
   defp _value([ { v1, s }, { v2, s }, { v3, s }, { v4, s }, { v5, s } ])
   when v2 == v1 - 1
   and v3 == v2 - 1
   and v4 == v3 - 1
   and v5 == v4 - 1 do
-    15
+    8
   end
 
-  defp _value(hand) do
-    IO.puts hand
-    0
-  end
+  # Four of a kind: Four cards same value, some other card (either higher or lower)
+  defp _value([ {v, _s1}, {v, _s2}, {v, _s3}, {v, _s4}, _ ]), do: 7
+  defp _value([ _, {v, _s1}, {v, _s2}, {v, _s3}, {v, _s4} ]), do: 7
+
+  defp _value(_), do: 0
 
 end
