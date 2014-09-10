@@ -23,6 +23,10 @@ defmodule Poker.Hand do
   defp _value([ {v, _s1}, {v, _s2}, {v, _s3}, {v, _s4}, _ ]), do: 7
   defp _value([ _, {v, _s1}, {v, _s2}, {v, _s3}, {v, _s4} ]), do: 7
 
+  # Full House: 3 cards of one value, 2 of another value (high/low and low/high)
+  defp _value([ {v1, _}, {v1, _}, {v1, _}, {v2, _}, {v2, _} ]), do: 6
+  defp _value([ {v1, _}, {v1, _}, {v2, _}, {v2, _}, {v2, _} ]), do: 6
+
   defp _value(_), do: 0
 
 end
