@@ -27,6 +27,9 @@ defmodule Poker.Hand do
   defp _value([ {v1, _}, {v1, _}, {v1, _}, {v2, _}, {v2, _} ]), do: 6
   defp _value([ {v1, _}, {v1, _}, {v2, _}, {v2, _}, {v2, _} ]), do: 6
 
+  # Flush: 5 cards, not in sequence (handled by case above), all with same suit
+  defp _value([ {_, s}, {_, s}, {_, s}, {_, s}, {_, s} ]), do: 5
+
   defp _value(_), do: 0
 
 end
