@@ -3,3 +3,5 @@ flush with aces at each end
 
 
 Still need to handle tie breakers
+
+Need function to take a list of hands and determine the winner
