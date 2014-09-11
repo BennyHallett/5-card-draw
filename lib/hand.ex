@@ -39,6 +39,12 @@ defmodule Poker.Hand do
     4
   end
 
+  # Three of a kind: 3 cards of the same value, plus 2 extras each with a different value
+  defp _value([ {v1, _}, {v1, _}, {v1, _}, {_v2, _}, {_v3, _} ]), do: 3
+  defp _value([ {_v1, _}, {v2, _}, {v2, _}, {v2, _}, {_v3, _} ]), do: 3
+  defp _value([ {_v1, _}, {_v2, _}, {v3, _}, {v3, _}, {v3, _} ]), do: 3
+
+
   defp _value(_), do: 0
 
 end
