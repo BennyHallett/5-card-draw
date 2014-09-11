@@ -144,5 +144,49 @@ defmodule HandTest do
     assert 2 == Poker.Hand.value hand
   end
 
+  test "one pair none higher" do
+    hand = [
+      %Poker.Card{ value: "J", suit: :hearts },
+      %Poker.Card{ value: 5,   suit: :spades },
+      %Poker.Card{ value: "J", suit: :spades },
+      %Poker.Card{ value: 4,   suit: :diamonds },
+      %Poker.Card{ value: 8,   suit: :clubs }
+    ]
+    assert 1 == Poker.Hand.value hand
+  end
+
+  test "one pair one higher" do
+    hand = [
+      %Poker.Card{ value: "J", suit: :hearts },
+      %Poker.Card{ value: "Q", suit: :spades },
+      %Poker.Card{ value: "J", suit: :spades },
+      %Poker.Card{ value: 8,   suit: :diamonds },
+      %Poker.Card{ value: 3,   suit: :clubs }
+    ]
+    assert 1 == Poker.Hand.value hand
+  end
+
+  test "one pair two higher" do
+    hand = [
+      %Poker.Card{ value: 8,   suit: :hearts },
+      %Poker.Card{ value: "Q", suit: :spades },
+      %Poker.Card{ value: "K", suit: :spades },
+      %Poker.Card{ value: "Q", suit: :diamonds },
+      %Poker.Card{ value: "A", suit: :clubs }
+    ]
+    assert 1 == Poker.Hand.value hand
+  end
+
+  test "one pair three higher" do
+    hand = [
+      %Poker.Card{ value: 9,   suit: :hearts },
+      %Poker.Card{ value: 7,   suit: :spades },
+      %Poker.Card{ value: "A", suit: :spades },
+      %Poker.Card{ value: 4,   suit: :diamonds },
+      %Poker.Card{ value: 4,   suit: :clubs }
+    ]
+    assert 1 == Poker.Hand.value hand
+  end
+
 
 end

@@ -49,6 +49,13 @@ defmodule Poker.Hand do
   defp _value([ {v1, _}, {v1, _}, {_v2, _}, {v3, _}, {v3, _} ]), do: 2
   defp _value([ {_v1, _}, {v2, _}, {v2, _}, {v3, _}, {v3, _} ]), do: 2
 
+  # One pair
+  defp _value([ {v1, _}, {v1, _}, {_v2, _}, {_v3, _}, {_v4, _} ]), do: 1
+  defp _value([ {_v1, _}, {v2, _}, {v2, _}, {_v3, _}, {_v4, _} ]), do: 1
+  defp _value([ {_v1, _}, {_v2, _}, {v3, _}, {v3, _}, {_v4, _} ]), do: 1
+  defp _value([ {_v1, _}, {_v2, _}, {_v3, _}, {v4, _}, {v4, _} ]), do: 1
+
+
   defp _value(_), do: 0
 
 end
