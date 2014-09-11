@@ -67,4 +67,15 @@ defmodule HandTest do
     assert 5 == Poker.Hand.value hand
   end
 
+  test "straight is worth 4" do
+    hand = [
+      %Poker.Card{ value: 8, suit: :hearts },
+      %Poker.Card{ value: 5, suit: :spades },
+      %Poker.Card{ value: 9, suit: :spades },
+      %Poker.Card{ value: 7, suit: :diamonds },
+      %Poker.Card{ value: 6, suit: :clubs }
+    ]
+    assert 4 == Poker.Hand.value hand
+  end
+
 end

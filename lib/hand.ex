@@ -30,6 +30,15 @@ defmodule Poker.Hand do
   # Flush: 5 cards, not in sequence (handled by case above), all with same suit
   defp _value([ {_, s}, {_, s}, {_, s}, {_, s}, {_, s} ]), do: 5
 
+  # Straight: All cards in sequence
+  defp _value([ { v1, _ }, { v2, _ }, { v3, _ }, { v4, _ }, { v5, _ } ])
+  when v2 == v1 - 1
+  and v3 == v2 - 1
+  and v4 == v3 - 1
+  and v5 == v4 - 1 do
+    4
+  end
+
   defp _value(_), do: 0
 
 end
