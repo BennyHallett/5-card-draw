@@ -1,3 +1,2 @@
-Straigh flush with aces at each end
-flush with aces at each end
+Straight flush with aces at each end
 Still need to handle tie breakers

@@ -31,6 +31,7 @@ defmodule Poker.Hand do
   defp _value([ {_, s}, {_, s}, {_, s}, {_, s}, {_, s} ]), do: 5
 
   # Straight: All cards in sequence
+  defp _value([ { 14, _ }, { 5, _ }, { 4, _ }, { 3, _ }, { 2, _ } ]), do: 4
   defp _value([ { v1, _ }, { v2, _ }, { v3, _ }, { v4, _ }, { v5, _ } ])
   when v2 == v1 - 1
   and v3 == v2 - 1

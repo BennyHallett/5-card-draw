@@ -78,6 +78,28 @@ defmodule HandTest do
     assert 4 == Poker.Hand.value hand
   end
 
+  test "straight with ace high is worth 4" do
+    hand = [
+      %Poker.Card{ value: "Q", suit: :hearts },
+      %Poker.Card{ value: 10,  suit: :spades },
+      %Poker.Card{ value: "A", suit: :spades },
+      %Poker.Card{ value: "K", suit: :diamonds },
+      %Poker.Card{ value: "J", suit: :clubs }
+    ]
+    assert 4 == Poker.Hand.value hand
+  end
+
+  test "straight with ace low is worth 4" do
+    hand = [
+      %Poker.Card{ value: 5,   suit: :hearts },
+      %Poker.Card{ value: 2,   suit: :spades },
+      %Poker.Card{ value: "A", suit: :spades },
+      %Poker.Card{ value: 3,   suit: :diamonds },
+      %Poker.Card{ value: 4,   suit: :clubs }
+    ]
+    assert 4 == Poker.Hand.value hand
+  end
+
   test "three of a kind is worth 3, both low" do
     hand = [
       %Poker.Card{ value: 8, suit: :hearts },
