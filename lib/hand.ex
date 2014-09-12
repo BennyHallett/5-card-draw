@@ -11,6 +11,7 @@ defmodule Poker.Hand do
   end
 
   # Straight flush: All cards same suit in sequence
+  defp _value([ { 14, s }, { 5, s }, { 4, s }, { 3, s }, { 2, s } ]), do: 8
   defp _value([ { v1, s }, { v2, s }, { v3, s }, { v4, s }, { v5, s } ])
   when v2 == v1 - 1
   and v3 == v2 - 1
