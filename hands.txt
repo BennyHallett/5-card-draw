@@ -1,2 +1,4 @@
-Straight flush with aces at each end
 Still need to handle tie breakers
+  - High Card [Done except draw]
+
+How do we handle absolute draws?
