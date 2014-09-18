@@ -63,6 +63,6 @@ defmodule Poker.Ai do
   defp _cardify([ discard, keep ]), do: [ _to_cards(discard, []) | [_to_cards(keep,  [])] ]
 
   defp _to_cards([], accumulator), do: Enum.reverse accumulator
-  defp _to_cards([ {v,s} | tail ], accumulator), do: _to_cards(tail, [%Poker.Card{ value: v, suit: s } | accumulator])
+  defp _to_cards([ {v,s} | tail ], accumulator), do: _to_cards(tail, [%Poker.Card{ value: Poker.Card.value_from_number(v), suit: s } | accumulator])
 
 end

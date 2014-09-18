@@ -13,6 +13,12 @@ defmodule Poker.Card do
   def value("J"),   do: 11
   def value(val), do: val
 
+  def value_from_number(14),   do: "A"
+  def value_from_number(13),   do: "K"
+  def value_from_number(12),   do: "Q"
+  def value_from_number(11),   do: "J"
+  def value_from_number(val),  do: val
+
   defp _compare(a, b) when a < b, do: -1
   defp _compare(a, b) when a == b, do: 0
   defp _compare(a, b) when a > b, do: 1

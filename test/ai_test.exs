@@ -18,4 +18,21 @@ defmodule AiTest do
     ] ] == Poker.Ai.discard hand
   end
 
+  test "AI keeps a straight flush ace hight" do
+    hand = [
+      %Poker.Card{ value: "J", suit: :hearts },
+      %Poker.Card{ value: 10, suit: :hearts },
+      %Poker.Card{ value: "A", suit: :hearts },
+      %Poker.Card{ value: "Q", suit: :hearts },
+      %Poker.Card{ value: "K", suit: :hearts }
+    ]
+    assert [ [], [
+      %Poker.Card{ value: "A", suit: :hearts },
+      %Poker.Card{ value: "K", suit: :hearts },
+      %Poker.Card{ value: "Q", suit: :hearts },
+      %Poker.Card{ value: "J", suit: :hearts },
+      %Poker.Card{ value: 10, suit: :hearts }
+    ] ] == Poker.Ai.discard hand
+  end
+
 end
