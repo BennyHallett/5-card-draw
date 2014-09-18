@@ -11,7 +11,7 @@ defmodule Poker.Ai do
     |> _cardify
   end
 
-  # Straight flush: All cards same suit in sequence
+  # Straight flush: Keep all the cards
   defp _discard([ { 14, s }, { 5, s }, { 4, s }, { 3, s }, { 2, s } ]), do: 
     [ [],  [ { 14, s }, { 5, s }, { 4, s }, { 3, s }, { 2, s } ] ]
   defp _discard([ { v1, s }, { v2, s }, { v3, s }, { v4, s }, { v5, s } ])
@@ -20,15 +20,17 @@ defmodule Poker.Ai do
   and v4 == v3 - 1
   and v5 == v4 - 1, do: [ [],  [ { v1, s }, { v2, s }, { v3, s }, { v4, s }, { v5, s } ] ]
 
-  # Four of a kind: Four cards same value, some other card (either higher or lower)
+  # Four of a kind: Keep all of the cards
   defp _discard([ {v, s1}, {v, s2}, {v, s3}, {v, s4}, {kv, ks} ]), do: 
     [ [] , [ {v, s1}, {v, s2}, {v, s3}, {v, s4}, {kv, ks} ] ]
   defp _discard([ {kv, ks}, {v, s1}, {v, s2}, {v, s3}, {v, s4} ]), do:
     [ [] , [ {kv, ks}, {v, s1}, {v, s2}, {v, s3}, {v, s4} ] ]
 
-  # Full House: 3 cards of one value, 2 of another value (high/low and low/high)
-  defp _value([ {v1, _}, {v1, _}, {v1, _}, {v2, _}, {v2, _} ]), do: 6
-  defp _value([ {v1, _}, {v1, _}, {v2, _}, {v2, _}, {v2, _} ]), do: 6
+  # Full House: Keep all of the cards
+  defp _value([ {v1, s1}, {v1, s2}, {v1, s3}, {v2, s4}, {v2, s5} ]), do: 
+    [ [] , [ {v1, s1}, {v1, s2}, {v1, s3}, {v2, s4}, {v2, s5} ] ]
+  defp _value([ {v1, s1}, {v1, s2}, {v2, s3}, {v2, s4}, {v2, s5} ]), do:
+    [ [], [ {v1, s1}, {v1, s2}, {v2, s3}, {v2, s4}, {v2, s5} ] ]
 
   # Flush: 5 cards, not in sequence (handled by case above), all with same suit
   defp _value([ {_, s}, {_, s}, {_, s}, {_, s}, {_, s} ]), do: 5
