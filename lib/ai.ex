@@ -27,42 +27,45 @@ defmodule Poker.Ai do
     [ [] , [ {kv, ks}, {v, s1}, {v, s2}, {v, s3}, {v, s4} ] ]
 
   # Full House: Keep all of the cards
-  defp _value([ {v1, s1}, {v1, s2}, {v1, s3}, {v2, s4}, {v2, s5} ]), do: 
+  defp _discard([ {v1, s1}, {v1, s2}, {v1, s3}, {v2, s4}, {v2, s5} ]), do: 
     [ [] , [ {v1, s1}, {v1, s2}, {v1, s3}, {v2, s4}, {v2, s5} ] ]
-  defp _value([ {v1, s1}, {v1, s2}, {v2, s3}, {v2, s4}, {v2, s5} ]), do:
+  defp _discard([ {v1, s1}, {v1, s2}, {v2, s3}, {v2, s4}, {v2, s5} ]), do:
     [ [], [ {v1, s1}, {v1, s2}, {v2, s3}, {v2, s4}, {v2, s5} ] ]
 
-  # Flush: 5 cards, not in sequence (handled by case above), all with same suit
-  defp _value([ {_, s}, {_, s}, {_, s}, {_, s}, {_, s} ]), do: 5
+  # Flush: Keep all of the cards
+  defp _discard([ {v1, s}, {v2, s}, {v3, s}, {v4, s}, {v5, s} ]), do:
+    [ [], [ {v1, s}, {v2, s}, {v3, s}, {v4, s}, {v5, s} ] ]
 
-  # Straight: All cards in sequence
-  defp _value([ { 14, _ }, { 5, _ }, { 4, _ }, { 3, _ }, { 2, _ } ]), do: 4
-  defp _value([ { v1, _ }, { v2, _ }, { v3, _ }, { v4, _ }, { v5, _ } ])
+  # Straight: Keep all of the cards
+  defp _discard([ { 14, s1 }, { 5, s2 }, { 4, s3 }, { 3, s4 }, { 2, s5 } ]), do: 
+    [ [], [ { 14, s1 }, { 5, s2 }, { 4, s3 }, { 3, s4 }, { 2, s5 } ] ]
+  defp _discard([ { v1, s1 }, { v2, s2 }, { v3, s3 }, { v4, s4 }, { v5, s5 } ])
   when v2 == v1 - 1
   and v3 == v2 - 1
   and v4 == v3 - 1
-  and v5 == v4 - 1 do
-    4
-  end
+  and v5 == v4 - 1, do: [ [], [ { v1, s1 }, { v2, s2 }, { v3, s3 }, { v4, s4 }, { v5, s5 } ] ]
 
-  # Three of a kind: 3 cards of the same value, plus 2 extras each with a different value
-  defp _value([ {v1, _}, {v1, _}, {v1, _}, {_v2, _}, {_v3, _} ]), do: 3
-  defp _value([ {_v1, _}, {v2, _}, {v2, _}, {v2, _}, {_v3, _} ]), do: 3
-  defp _value([ {_v1, _}, {_v2, _}, {v3, _}, {v3, _}, {v3, _} ]), do: 3
+  # Three of a kind: Keep the 3, discard the others
+  defp _discard([ {v1, s1}, {v1, s2}, {v1, s3}, {v2, s4}, {v3, s5} ]), do:
+    [ [ {v2, s4}, {v3, s5} ], [ {v1, s1}, {v1, s2}, {v1, s3} ] ]
+  defp _value([ {v1, s1}, {v2, s2}, {v2, s3}, {v2, s4}, {v3, s5} ]), do:
+    [ [], [ {v1, s1}, {v2, s2}, {v2, s3}, {v2, s4}, {v3, s5} ] ] ## Up to here
+  defp _value([ {v1, s1}, {v2, s2}, {v3, s3}, {v3, s4}, {v3, s5} ]), do:
+    [ [], [ {v1, s1}, {v2, s2}, {v3, s3}, {v3, s4}, {v3, s5} ] ]
 
-  # Two pair
+  # Two pair: Discard the kicker
   defp _value([ {v1, _}, {v1, _}, {v2, _}, {v2, _}, {_v3, _} ]), do: 2
   defp _value([ {v1, _}, {v1, _}, {_v2, _}, {v3, _}, {v3, _} ]), do: 2
   defp _value([ {_v1, _}, {v2, _}, {v2, _}, {v3, _}, {v3, _} ]), do: 2
 
-  # One pair
+  # One pair: Discard the three
   defp _value([ {v1, _}, {v1, _}, {_v2, _}, {_v3, _}, {_v4, _} ]), do: 1
   defp _value([ {_v1, _}, {v2, _}, {v2, _}, {_v3, _}, {_v4, _} ]), do: 1
   defp _value([ {_v1, _}, {_v2, _}, {v3, _}, {v3, _}, {_v4, _} ]), do: 1
   defp _value([ {_v1, _}, {_v2, _}, {_v3, _}, {v4, _}, {v4, _} ]), do: 1
 
-
-  defp _value(_), do: 0
+  # If the hand is rubbish, discard the whole thing
+  defp _discard(rubbish), do: [ rubbish, [] ]
 
   defp _cardify([ discard, keep ]), do: [ _to_cards(discard, []) | [_to_cards(keep,  [])] ]
 
