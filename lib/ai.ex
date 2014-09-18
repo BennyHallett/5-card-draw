@@ -21,8 +21,10 @@ defmodule Poker.Ai do
   and v5 == v4 - 1, do: [ [],  [ { v1, s }, { v2, s }, { v3, s }, { v4, s }, { v5, s } ] ]
 
   # Four of a kind: Four cards same value, some other card (either higher or lower)
-  defp _value([ {v, _s1}, {v, _s2}, {v, _s3}, {v, _s4}, _ ]), do: 7
-  defp _value([ _, {v, _s1}, {v, _s2}, {v, _s3}, {v, _s4} ]), do: 7
+  defp _discard([ {v, s1}, {v, s2}, {v, s3}, {v, s4}, {kv, ks} ]), do: 
+    [ [] , [ {v, s1}, {v, s2}, {v, s3}, {v, s4}, {kv, ks} ] ]
+  defp _discard([ {kv, ks}, {v, s1}, {v, s2}, {v, s3}, {v, s4} ]), do:
+    [ [] , [ {kv, ks}, {v, s1}, {v, s2}, {v, s3}, {v, s4} ] ]
 
   # Full House: 3 cards of one value, 2 of another value (high/low and low/high)
   defp _value([ {v1, _}, {v1, _}, {v1, _}, {v2, _}, {v2, _} ]), do: 6
