@@ -62,10 +62,14 @@ defmodule Poker.Ai do
     [ [ {v1, s1} ], [ {v2, s2}, {v2, s3}, {v3, s4}, {v3, s5} ] ]
 
   # One pair: Discard the three
-  defp _value([ {v1, _}, {v1, _}, {_v2, _}, {_v3, _}, {_v4, _} ]), do: 1
-  defp _value([ {_v1, _}, {v2, _}, {v2, _}, {_v3, _}, {_v4, _} ]), do: 1
-  defp _value([ {_v1, _}, {_v2, _}, {v3, _}, {v3, _}, {_v4, _} ]), do: 1
-  defp _value([ {_v1, _}, {_v2, _}, {_v3, _}, {v4, _}, {v4, _} ]), do: 1
+  defp _discard([ {v1, s1}, {v1, s2}, {v2, s3}, {v3, s4}, {v4, s5} ]), do:
+    [ [ {v2, s3}, {v3, s4}, {v4, s5} ], [ {v1, s1}, {v1, s2} ] ]
+  defp _discard([ {v1, s1}, {v2, s2}, {v2, s3}, {v3, s4}, {v4, s5} ]), do:
+    [ [ {v1, s1}, {v3, s4}, {v4, s5} ], [ {v2, s2}, {v2, s3} ] ]
+  defp _discard([ {v1, s1}, {v2, s2}, {v3, s3}, {v3, s4}, {v4, s5} ]), do:
+    [ [ {v1, s1}, {v2, s2}, {v4, s5} ], [ {v3, s3}, {v3, s4} ] ]
+  defp _discard([ {v1, s1}, {v2, s2}, {v3, s3}, {v4, s4}, {v4, s5} ]), do:
+    [ [ {v1, s1}, {v2, s2}, {v3, s3} ], [ {v4, s4}, {v4, s5} ] ] 
 
   # If the hand is rubbish, discard the whole thing
   defp _discard(rubbish), do: [ rubbish, [] ]
