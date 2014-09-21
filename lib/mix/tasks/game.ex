@@ -6,7 +6,9 @@ defmodule Mix.Tasks.Game do
   """
   def run(args) do
     build_deck
-    |> create_players
+    |> create_opponents
+    |> create_player
+    |> shuffle_seats
     |> deal
     |> show_hidden_hands
     #|> discard
@@ -16,9 +18,13 @@ defmodule Mix.Tasks.Game do
 
   defp build_deck, do: Poker.Deck.new
 
-  defp create_players(deck), do: _create_players(%{ deck: deck, players: [] }, 0)
-  defp _create_players(state, 3), do: state
-  defp _create_players(%{ deck: deck, players: players }, accumulator ), do: _create_players(%{ deck: deck, players: [Poker.Ai.new(accumulator+1) | players] }, accumulator + 1)
+  defp create_opponents(deck), do: _create_opponents(%{ deck: deck, players: [] }, 0)
+  defp _create_opponents(state, 3), do: state
+  defp _create_opponents(%{ deck: deck, players: players }, accumulator ), do: _create_opponents(%{ deck: deck, players: [Poker.Ai.new(accumulator+1) | players] }, accumulator + 1)
+
+  defp create_player(state), do: %{ deck: state.deck, players: [{ "Player", nil } | state.players ] }
+
+  defp shuffle_seats(state), do: %{ deck: state.deck, players: Enum.shuffle(state.players) }
 
   defp deal(state), do: _deal(state, [])
   defp _deal(%{ deck: deck, players: [] }, output), do: %{ deck: deck, players: output }
@@ -29,9 +35,16 @@ defmodule Mix.Tasks.Game do
     state
   end
   defp _show_hidden_hands([]), do: IO.puts "--------------------------------------"
+  defp _show_hidden_hands([ { "Player", hand } | tail ]) do
+    IO.puts "Player"
+    Enum.each(hand, &(IO.write "#{Poker.Card.short_name(&1)} "))
+    IO.puts ""
+    IO.puts ""
+    _show_hidden_hands(tail)
+  end
   defp _show_hidden_hands([ { name, hand } | tail ]) do
     IO.puts name
-    Enum.each(hand, &(IO.write "#{Poker.Card.short_name(&1)} "))
+    Enum.each(hand, fn _ -> IO.write "## " end)
     IO.puts ""
     IO.puts ""
     _show_hidden_hands(tail)
