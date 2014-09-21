@@ -1,6 +1,10 @@
 defmodule AiTest do
   use ExUnit.Case
 
+  test "create a new AI player" do
+    assert { "CPU 1", nil } = Poker.Ai.new(1)
+  end
+
   test "AI keeps a straight flush" do
     hand = [
       %Poker.Card{ value: 7, suit: :hearts },

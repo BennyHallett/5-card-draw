@@ -1,5 +1,7 @@
 defmodule Poker.Ai do
 
+  def new(num), do: { "CPU #{num}", nil }
+
   def discard([ c1, c2, c3, c4, c5 ]) do
     [ { Poker.Card.value(c1.value), c1.suit },
       { Poker.Card.value(c2.value), c2.suit },
