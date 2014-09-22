@@ -1,5 +1,9 @@
 defmodule Poker.Hand do
 
+  def print(cards), do: _print(cards, [])
+  def _print([c|t], output), do: _print(t, ["#{Poker.Card.short_name(c)} "|output])
+  def _print([], output), do: Enum.join(output)
+
   def value([ c1, c2, c3, c4, c5 ]) do
     [ { Poker.Card.value(c1.value), c1.suit },
       { Poker.Card.value(c2.value), c2.suit },

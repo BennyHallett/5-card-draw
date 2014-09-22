@@ -5,6 +5,8 @@ defmodule Mix.Tasks.Game do
   @moduledoc """
   """
   def run(args) do
+    :random.seed(:os.timestamp)
+
     build_deck
     |> create_opponents
     |> create_player
@@ -63,6 +65,6 @@ defmodule Mix.Tasks.Game do
 
   def evaluate(state), do: Poker.Comparison.determine_winner(state.players)
 
-  def announce_winner({ name, hand }), do: IO.puts "#{name} was the winner"
+  def announce_winner({ name, hand }), do: IO.puts "#{name} was the winner with #{Poker.Hand.print(hand)}"
 
 end
