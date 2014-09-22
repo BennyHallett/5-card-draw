@@ -12,8 +12,8 @@ defmodule Mix.Tasks.Game do
     |> deal
     |> show_hidden_hands
     |> discard
-    #|> evaluate
-    #|> announce_winner
+    |> evaluate
+    |> announce_winner
   end
 
   defp build_deck, do: Poker.Deck.new
@@ -60,5 +60,9 @@ defmodule Mix.Tasks.Game do
     { additions, remaining }= Enum.split(deck, length(chuck))
     _discard(%{ deck: remaining, players: tail }, [{ name, keep ++ additions } | output ])
   end
+
+  def evaluate(state), do: Poker.Comparison.determine_winner(state.players)
+
+  def announce_winner({ name, hand }), do: IO.puts "#{name} was the winner"
 
 end
