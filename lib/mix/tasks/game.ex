@@ -51,14 +51,14 @@ defmodule Mix.Tasks.Game do
   end
 
   defp discard(state), do: _discard(state, [])
-  defp _discard({ deck: deck, players: [] }, output), do: { deck: deck, players: output }
-  defp _discard({ deck: deck, players: [{ "Player", hand } | tail] }, output) do:
-    _discard({ deck: deck, players: tail }, [{ name, hand } | output ])
+  defp _discard(%{ deck: deck, players: [] }, output), do: %{ deck: deck, players: output }
+  defp _discard(%{ deck: deck, players: [{ "Player", hand } | tail] }, output) do
+    _discard(%{ deck: deck, players: tail }, [{ "Player", hand } | output ])
   end
-  defp _discard({ deck: deck, players: [{ name, hand } | tail] }, output) do:
+  defp _discard(%{ deck: deck, players: [{ name, hand } | tail] }, output) do
     [ chuck, keep ] = Poker.Ai.discard hand
-    [ additions, remaining ] = Enum.split(deck, length(chuck))
-    _discard({ deck: remaining, players: tail }, [{ name, keep ++ additions } | output ])
+    { additions, remaining }= Enum.split(deck, length(chuck))
+    _discard(%{ deck: remaining, players: tail }, [{ name, keep ++ additions } | output ])
   end
 
 end
